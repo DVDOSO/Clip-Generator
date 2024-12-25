@@ -15,7 +15,7 @@ def timeToString():
     hour = date.now().hour
     minute = date.now().minute
     second = date.now().second
-    return f"{year}{month}{day}{hour}{minute}{second}"
+    return f"{year:02d}{month:02d}{day:02d}{hour:02d}{minute:02d}{second:02d}"
 
 def generate(text):
     SpeechToText.textToMp3(text)
