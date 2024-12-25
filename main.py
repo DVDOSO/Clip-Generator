@@ -7,40 +7,33 @@ def deleteFile(delFile):
     else:
         print("Error")
 
-def timeToString():
-    date = datetime.datetime
-    year = date.now().year
-    month = date.now().month
-    day = date.now().day
-    hour = date.now().hour
-    minute = date.now().minute
-    second = date.now().second
-    return f"{year:02d}{month:02d}{day:02d}{hour:02d}{minute:02d}{second:02d}"
-
 def generate(text):
-    SpeechToText.textToMp3(text)
-    ClipEdit.combineAudioWithVideo()
-    Subtitles.genSubtitles()
+    SpeechToText.textToMp3Short(text)
 
-    video = VideoFileClip('result.mp4')
-    subtitles = pysrt.open('output.srt')
-
-    subtitle_clips = ClipEdit.create_subtitle_clips(subtitles, video.size)
-    final_video = CompositeVideoClip([video] + subtitle_clips)
-    final_video.write_videofile('final.mp4')
+    i = 0
+    for speech in os.listdir('./output'):
+        Subtitles.genSubtitlesShort(f'./output/{speech}', i)
+        i += 1
     
-    os.rename("final.mp4", "./output/"+timeToString()+".mp4")
+    i = 0
+    for item in os.listdir('./output'):
+        if(item[:6] == 'speech'):
+            ClipEdit.createVideoShorts(f'./output/{item}', f'./output/output{item[6:-4]}.srt', i)
+            i += 1
 
-    deleteFile("result.mp4")
-    deleteFile("speech.mp3")
-    deleteFile("output.srt")
+    for item in os.listdir('./output'):
+        if(item[:6] == 'speech'):
+            deleteFile(f'./output/{item}')
+        if(item[:6] == 'output'):
+            deleteFile(f'./output/{item}')
+    deleteFile('speech.mp3')
 
 generate("""
-A couple of weeks ago, I traveled to another country to see an artist I’ve been a fan of for six years. This was a once-in-a-lifetime experience for me, and I’d been waiting months for it. I sacrificed a lot financially and mentally to make it happen. Since it was my first (and probably only) time seeing them, I went all out: I bought GA tickets and arrived at the queue at 5 a.m. (even though the doors wouldn’t open until 6:30–7 p.m.) in freezing cold weather. I waited all day—hungry, cold, and dehydrated—but it was worth it because when the doors opened, I secured a front-row barricade spot, right up against the stage. This was my dream spot.
+38/F I am celebrating Christmas with my mom 68/F, my brother 47/M and his family. My mom flew in from out of state and we are driving to a meetup location to spend time with my brother's family - a place in the mountains we all enjoy just for the holidays. All of us live hours away, our mom being the furthest, on the opposite coast. My brother and I are several hours away by car.
 
-Then, a guy behind me tapped me on the shoulder and told me he was disabled. He said the venue was supposed to let disabled attendees in early, but they hadn’t. He asked me to give him my spot at the barricade. Here’s the thing: I know this venue is very accommodating for disabled attendees. I actually have friends with disabilities who’ve gone to shows here, and the staff always ensures they get to the front row safely during a designated time frame before it gets too crowded. 
+This year, we received the bad news that, while my mom has been at my place, her pipes froze and flooded her basement. She is upset, understandably, I helped her get everything started and have her insurance, a cleanup team and a general contractor all working on her place while she is with me. She then broached the topic that she wanted to extended her week stay to "two weeks or more". I said no, I need to get back to my regular routine and get ready to return to work. She's welcome to stay here as originally planned, which is until Saturday.
 
-Now, I’m a very short person (155 cm/5’1”), and this guy was extremely tall—easily over 5.5 If I gave him my spot, I wouldn’t be able to see anything at all because he would completely block my view. I honestly would’ve been willing to move if he wasn’t so tall or if I could still see from the second row. However, in this case, I knew I’d lose the view I had waited more than 10 hours for.
+Then she said she may ask to ride back with my brother and his family to their home in another state (opposite direction than me). She refused to ask him until Christmas, so l gave my brother a heads up last night so he has a chance to speak with his wife. I also told him that he's under no obligation to say yes, as she is still welcome to stay with me until Saturday and her insurance company will be footing the bill for most of her stay at a hotel and meals (IF, BIG IF, her residence is uninhabitable, which we do not know at this time).
 
-I tried to compromise. I pointed out that the right side of the barricade was still open and suggested he go there. Since he’s so tall, he’d still have a great view and could hold onto the rail for support. However, he refused, saying the view wasn’t as good as where I was. While we were talking, that section filled up, and he became more insistent. He said he’d "have a hard time" if he couldn’t take my spot.
+He told me he didn't have room to take her back with him (3 people in his car and no room for a 4th -assuming luggage is the issue). That I should let her stay with me because she's lonely. I told him I understood that, but I'm not wrong for wanting to cap my time with her at the one week originally planned. He had left that text on "send". My mom can be a challenging personality and with this unfortunate development, she's even more ... difficult. I love my mom, but I'm tired. I want my house back and don’t want to be criticized or complained at. I refused to allow my lonely mother to extend her stay with me, despite the recent damages to and unknown state of her home. AITAH for prioritizing my space and personal downtime over my mother's emotional needs?
 """)

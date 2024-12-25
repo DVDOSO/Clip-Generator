@@ -11,12 +11,12 @@ def srt_timestamp(seconds: float) -> str:
 
 model = whisper.load_model("tiny.en")
 
-def genSubtitles():
-    result = model.transcribe("speech.mp3")
+def genSubtitlesShort(media, id):
+    result = model.transcribe(media)
 
     segments = result["segments"]
 
-    with open("output.srt", "w", encoding="utf-8") as srt_file:
+    with open(f"./output/output{id}.srt", "w", encoding="utf-8") as srt_file:
         for i, segment in enumerate(segments, start=1):
             start_time = srt_timestamp(segment["start"])
             end_time = srt_timestamp(segment["end"])
