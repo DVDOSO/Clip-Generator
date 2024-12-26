@@ -78,7 +78,7 @@ def create_subtitle_clips(subtitles, videosize):
         text_clip = TextClip(
             font="BebasNeue-Regular.ttf",
             text=subtitle.text,
-            font_size=35,
+            font_size=45,
             color='white',
             stroke_color="black",
             stroke_width=5,
