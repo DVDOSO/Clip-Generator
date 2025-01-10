@@ -29,4 +29,6 @@ scoop install ffmpeg
 4. The clip(s) should be generated into the `output` folder (this may take a minute)
 
 ## Example Clip
-![](sample.mp4)
+https://github.com/user-attachments/assets/75941ea2-9c16-4101-8d09-a97ac2b25f7a
+
+
