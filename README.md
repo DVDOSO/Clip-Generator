@@ -28,4 +28,5 @@ scoop install ffmpeg
 3. Press ENTER for a new line and type the single character `#` to end the input
 4. The clip(s) should be generated into the `output` folder (this may take a minute)
 
-## Results
+## Example Clip
+![](sample.mp4)
